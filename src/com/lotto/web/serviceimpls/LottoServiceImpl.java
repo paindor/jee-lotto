@@ -49,23 +49,30 @@ public class LottoServiceImpl implements LottoService{
 		String result = "";
 		int idx = 0;
 		int[] arr = new int[6];
+		
+	
 		for(int i = 0 ; i < 30 ;i ++) {
 			if(idx == 6) {
 				break;
 			}
+			for(int j = 0 ; i < 6; i++) {
+				System.out.print(arr[i]+"=");
+			}
 			if(duplicatePrevention(arr)) {
 				arr[idx] = rd.nextInt(45)+1;
+				System.out.print("중복체크" + arr[idx]);
 				
 			}
 			else {
+				
 				arr[idx] = rd.nextInt(45)+1;
 				idx++;
+				
 			}
 		}
 		
-		for(int i = 0  ; i <arr.length; i++ ) {
-			result += (i == 6)? String.valueOf(arr[i]):String.valueOf(arr[i]) +",";
-		}
+		result = this.ascendingSort(arr);
+		System.out.println(result);
 	
 		return result;
 	}
@@ -90,13 +97,19 @@ public class LottoServiceImpl implements LottoService{
 	@Override
 	public boolean duplicatePrevention(int[] arr) {
 		boolean result = false;
-		for(int i = 0;i < 6; i++) {
-			for(int j = 0 ; j < 5; j++) {
-				if(arr[j] != 0 && arr[j+1]!= 0) {
-					if(arr[j] == arr[j+1]) {
-						result = true;
+		for(int i = 0; i < 6; i++) {
+			for(int j = 0  ; j < i ; j++) {
+				if(arr[i] != 0) {
+					if(i !=  j ) {
+						if(arr[i] == arr[j]) {
+							result = true;
+							break;
+							
+						}
+						
 					}
 				}
+				
 				
 			}
 		}
@@ -106,8 +119,27 @@ public class LottoServiceImpl implements LottoService{
 
 	@Override
 	public String ascendingSort(int[] arr) {
-		// TODO Auto-generated method stub
-		return null;
+		for(int i= 0 ; i < arr.length; i++ ) {
+			for(int j = 0 ; j < arr.length-1 ; j++ ) {
+				if(arr[j] > arr[j+1]) {
+					int temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
+				}
+			}
+			
+		}
+		String result = "";
+		for(int i = 0 ;i < arr.length ; i++) {
+			if(i == 5) {
+				result += arr[i];
+			}
+			else
+			{
+				result += arr[i]+",";
+			}
+		}
+		return result;
 	}
 		
 	//}
