@@ -1,6 +1,6 @@
 package com.lotto.web.serviceimpls;
 
-import java.util.List;
+
 import java.util.Random;
 
 import com.lotto.web.daoimpls.LottoDaoImpl;
@@ -20,7 +20,7 @@ public class LottoServiceImpl implements LottoService{
 	@Override
 	public void createLotto(LottoBean param) {
 		
-		param.setBall(createBall());
+		//param.setBall(createBall();
 		param.setLottoSeq(createSequence());
 		param.setLotteryNum(createLottoNum());
 		
@@ -45,35 +45,23 @@ public class LottoServiceImpl implements LottoService{
 
 	@Override
 	public String createLottoNum() {
-		 Random rd = new Random();
 		String result = "";
-		int idx = 0;
 		int[] arr = new int[6];
-		
-	
-		for(int i = 0 ; i < 30 ;i ++) {
-			if(idx == 6) {
-				break;
+		for(int i = 0 ;i< 6; i++) {
+			int rd = this.createBall();
+			
+			if(isExsist(arr, rd )) {
+				i--;
 			}
-			for(int j = 0 ; i < 6; i++) {
-				System.out.print(arr[i]+"=");
-			}
-			if(duplicatePrevention(arr)) {
-				arr[idx] = rd.nextInt(45)+1;
-				System.out.print("중복체크" + arr[idx]);
-				
-			}
-			else {
-				
-				arr[idx] = rd.nextInt(45)+1;
-				idx++;
-				
+			else
+			{
+				arr[i] = rd;
 			}
 		}
-		
-		result = this.ascendingSort(arr);
-		System.out.println(result);
 	
+		result = bubbleSort(arr, true);
+		
+		System.out.println(result);
 		return result;
 	}
 	//public String CreateLottoN() {
@@ -87,29 +75,24 @@ public class LottoServiceImpl implements LottoService{
 
 
 	@Override
-	public String createBall() {
-		String ball = "";
+	public int createBall() {
+		int ball =0;
 		
-		return new Random().nextInt(45)+1 +"";
+		//Array.
+		
+		return (int)(Math.random() *45 )+1;
+		
 	}
 
 
 	@Override
-	public boolean duplicatePrevention(int[] arr) {
+	public boolean isExsist(int[] arr , int a) {
 		boolean result = false;
-		for(int i = 0; i < 6; i++) {
-			for(int j = 0  ; j < i ; j++) {
-				if(arr[i] != 0) {
-					if(i !=  j ) {
-						if(arr[i] == arr[j]) {
-							result = true;
-							break;
-							
-						}
-						
-					}
-				}
-				
+		for(int i = 0 ;i < arr.length; i++) {
+			if(arr[i] != 0 && a == arr[i]) {
+			
+				result = true;
+				break;
 				
 			}
 		}
@@ -118,14 +101,26 @@ public class LottoServiceImpl implements LottoService{
 
 
 	@Override
-	public String ascendingSort(int[] arr) {
+	public String bubbleSort(int[] arr , boolean isUp) {
 		for(int i= 0 ; i < arr.length; i++ ) {
 			for(int j = 0 ; j < arr.length-1 ; j++ ) {
-				if(arr[j] > arr[j+1]) {
-					int temp = arr[j];
-					arr[j] = arr[j+1];
-					arr[j+1] = temp;
+				if(isUp) {
+					if(arr[j] > arr[j+1]) {
+						int temp = arr[j];
+						arr[j] = arr[j+1];
+						arr[j+1] = temp;
+					}
+					
 				}
+				else {
+					if(arr[j] < arr[j+1]) {
+						int temp = arr[j];
+						arr[j] = arr[j+1];
+						arr[j+1] = temp;
+					}
+					
+				}
+				
 			}
 			
 		}

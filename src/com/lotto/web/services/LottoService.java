@@ -8,11 +8,11 @@ public interface LottoService {
 	public void createLotto(LottoBean param);
 	
 	public String createSequence();
-	public String createBall();
+	public int createBall();
 	public String createLottoNum();
 	public String createLottoN();
-	public boolean duplicatePrevention(int[] arr);
-	public String ascendingSort(int[] arr);
+	public boolean isExsist(int[] arr, int a);
+	public String bubbleSort(int[] arr, boolean isUp);
 	
 	
 	//public List
