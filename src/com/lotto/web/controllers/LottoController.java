@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.lotto.web.domains.LottoBean;
+import com.lotto.web.pool.Const;
 import com.lotto.web.serviceimpls.LottoServiceImpl;
 import com.lotto.web.services.LottoService;
 @WebServlet("/lotto.do")
@@ -16,6 +17,18 @@ public class LottoController extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		switch(request.getParameter("action")) {
+		case "buy":
+			String money = request.getParameter("money");
+			
+			break;
+			
+		}
+		
+		
+		System.out.println(request.getParameter("money"));
 		String money = request.getParameter("money");
 		LottoBean lot = new LottoBean();
 		LottoService ls = new LottoServiceImpl();
